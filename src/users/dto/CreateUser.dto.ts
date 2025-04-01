@@ -1,7 +1,8 @@
-import { IsBoolean, IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsString, IsStrongPassword, IsEmail,IsOptional } from "class-validator";
 export class CreateUserDto {
     @IsNotEmpty()
     @IsString()
+    @IsEmail()
     email:string;
 
     @IsStrongPassword({
@@ -12,18 +13,21 @@ export class CreateUserDto {
         minSymbols:1})
     @IsString()
     @IsNotEmpty()
-    passwordHash:string
+    password:string
 
     @IsNotEmpty()
     @IsString()
     name:string
 
     @IsString()
+    @IsOptional()
     title?:string
 
     @IsString()
+    @IsOptional()
     refrestToken?:string
 
     @IsBoolean()
+    @IsOptional()
     isAdmin:boolean;
 }
