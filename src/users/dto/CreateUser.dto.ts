@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsString, IsStrongPassword, IsEmail,IsOptional } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsString, IsStrongPassword, IsEmail,IsOptional, IsArray } from "class-validator";
 export class CreateUserDto {
     @IsNotEmpty()
     @IsString()
@@ -30,4 +30,8 @@ export class CreateUserDto {
     @IsBoolean()
     @IsOptional()
     isAdmin:boolean;
+
+    @IsArray()
+    @IsNotEmpty()
+    permissions:Array<string>
 }
