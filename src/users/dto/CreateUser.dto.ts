@@ -32,6 +32,5 @@ export class CreateUserDto {
     isAdmin:boolean;
 
     @IsArray()
-    @IsNotEmpty()
     permissions:Array<string>
 }

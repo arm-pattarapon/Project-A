@@ -14,7 +14,7 @@ export class UsersService {
     ) {}
 
     getsUser(){
-        return this.userModel.find().select('-password');
+        return this.userModel.find().select('-password').populate('permissions');
     }
 
     async createUser({permissions,...createUserDto}: CreateUserDto){
@@ -25,16 +25,11 @@ export class UsersService {
           
             if (!isDuplicate) {
                 const newUser = new this.userModel(createUserDto)
-                if (permissions.length <= 0) {
+                if (permissions.length <= 0 || !permissions ) {
                    const defaultPermission = await this.permssionModel.findOne({permissionName:'default'}).select('_id').exec();
-                newUser.save()
-                   .then(user =>{ 
-                    user.updateOne({
-                        $push:{
-                            permissions:[defaultPermission._id]
-                        }
-                    })
-                }).catch(err => console.log(err));
+                //    console.log(defaultPermission);
+                   newUser.permissions = [defaultPermission];
+                   newUser.save().then(user=>console.log(user)).catch(err=>console.log(err))
 
                 }else{
 
